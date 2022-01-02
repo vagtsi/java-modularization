@@ -60,6 +60,14 @@ public class PluginModuleHolder {
 		}
 		return injector;
 	}
+	
+	public Set<ExtensionRegistry> extensionRegistries() {
+		if (!isInitialized()) {
+			throw new IllegalStateException("Module not initialized!");
+		}
+		
+		return injector.getInstance(Key.get(setOf(ExtensionRegistry.class)));
+	}
 
 	public void initialize() {
 		if (isInitialized()) {

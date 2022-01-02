@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.api.PluginModule;
+import de.vagtsi.examples.guicejavamodule.greeting.core.GreetingService;
 
 public class GuiceModuleApp {
 	private static final Logger log = LoggerFactory.getLogger(GuiceModuleApp.class.getSimpleName());
-
-	private Map<String, PluginModuleHolder> pluginModules;
 
 	public static void main(String[] args) {
 		GuiceModuleApp app = new GuiceModuleApp();
@@ -28,7 +28,7 @@ public class GuiceModuleApp {
 		// load all plugins
 		log.info("Scanning for all plugin modules");
 		ServiceLoader<PluginModule> pluginLoader = ServiceLoader.load(PluginModule.class);
-		pluginModules = pluginLoader.stream().map(Provider::get).map(p -> new PluginModuleHolder(p.module()))
+		Map<String, PluginModuleHolder> pluginModules = pluginLoader.stream().map(Provider::get).map(p -> new PluginModuleHolder(p.module()))
 				.collect(Collectors.toConcurrentMap(PluginModuleHolder::moduleName, Function.identity()));
 
 		log.info("> found {} plugin modules: {}", pluginModules.size(), pluginModules.keySet());
@@ -42,41 +42,28 @@ public class GuiceModuleApp {
 				log.info("> plugin module {} has no parent dependency", pluginModule);
 			} else {
 				if (dependencies.size() > 1) {
-					log.warn("> plugin module {} has more {} instead of only one supported parent dependencies: {}! Using first one only!",
+					log.warn(
+							"> plugin module {} has more {} instead of only one supported parent dependencies: {}! Using first one only!",
 							pluginModule, dependencies.size(), dependencies);
 				}
 				pluginModule.setParentPlugin(dependencies.get(0));
-				log.info("> plugin module {} has {} dependencies: {}", pluginModule, dependencies.size(),
-						dependencies);
+				log.info("> plugin module {} has {} dependencies: {}", pluginModule, dependencies.size(), dependencies);
 			}
 		}
-		
-		//initialize all plugin modules (dependencies implicitly first)
+
+		// initialize all plugin modules (dependencies implicitly first)
 		for (PluginModuleHolder pluginModule : pluginModules.values()) {
 			pluginModule.initialize();
 		}
 
-
-//	Collection<DependencyNode> nodes = pluginGraph.resolve();
-//	log.info("> initializing {} plugins in resolved order: {}", nodes.size(), nodes);
-//	
-//	for (DependencyNode node : nodes) {
-//		log.info("init plugin {} having {} dependencies: {}", node, node.getEdges().size(), node.getEdges());
-//		
-//	}
-
-		// create Guice injectors
-//    List<Module> modules = plugins.stream()
-//        .map(PluginModule::module)
-//        .collect(Collectors.toList());
-
-//    Injector injector = Guice.createInjector(modules);
-//    GreetingServiceManager greetingServiceManager = injector.getInstance(GreetingServiceManager.class);
-//    List<GreetingService> services = greetingServiceManager.getAllGreeterServices();
-//    log.info("> successful created injector with {} greeting service instances: {}",
-//        services.size(),
-//        services.stream()
-//          .map(p -> p.getClass().getSimpleName())
-//          .collect(Collectors.toList()));
+		//call/print out all plugged in GreetingServices
+		PluginModuleHolder coreModule = pluginModules.get("plugin.greeting.core");
+		@SuppressWarnings("unchecked")
+		ExtensionRegistry<GreetingService> registry = coreModule.extensionRegistries().iterator().next();
+		List<GreetingService> services = registry.getAllExtensions();
+		log.info("{} GreetingServices are registered:", services.size());
+		for (GreetingService service : services) {
+			log.info("> {}", service.hello());
+		}
 	}
 }
