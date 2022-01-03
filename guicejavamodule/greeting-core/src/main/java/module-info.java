@@ -5,6 +5,6 @@ module plugin.greeting.core {
   requires java.inject;
   requires org.slf4j;
   
-  provides de.vagtsi.examples.guicejavamodule.api.PluginModule
-    with de.vagtsi.examples.guicejavamodule.greeting.core.GreetingCorePlugin;
+  provides com.google.inject.Module
+    with de.vagtsi.examples.guicejavamodule.greeting.core.GreetingCoreModule;
 }

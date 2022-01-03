@@ -6,6 +6,6 @@ module plugin.greeting.french {
   requires transitive plugin.greeting.core;
   requires org.slf4j;
   
-  provides de.vagtsi.examples.guicejavamodule.api.PluginModule
-    with de.vagtsi.examples.guicejavamodule.greeting.french.FrenchGreetingPlugin;
+  provides com.google.inject.Module
+    with de.vagtsi.examples.guicejavamodule.greeting.french.FrenchGreetingModule;
 }

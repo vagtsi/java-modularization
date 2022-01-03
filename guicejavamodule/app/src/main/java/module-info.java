@@ -7,5 +7,5 @@ module plugin.app {
   requires plugin.greeting.core;
   requires plugin.greeting.french;
 
-  uses de.vagtsi.examples.guicejavamodule.api.PluginModule;
+  uses com.google.inject.Module;
 }
