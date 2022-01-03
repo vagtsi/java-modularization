@@ -4,7 +4,7 @@ This example project exposes [Guice](https://github.com/google/guice) dependency
 
 This simple approach does need only one interface `ExtensionRegistry` with already provided default implementation `SimpleExtensionRegistry` which is only needed by the plugin defining the extension point. Any interface or class can be defined as contract to be implemented by additional plugins.
 
-The general idea is to expose Guice module definitions as java service as explained in the article [https://www.oreilly.com/content/handling-dependency-injection-using-java9-modularity/](Handling dependency injection using Java 9 modularity). A plugin just needs to define its Guice module class as java service
+The general idea is to expose Guice module definitions as java service as explained in the article [Handling dependency injection using Java 9 modularity](https://www.oreilly.com/content/handling-dependency-injection-using-java9-modularity). A plugin just needs to define its Guice module class as java service
 ```
   provides com.google.inject.Module
     with de.vagtsi.examples.guicejavamodule.greeting.english.EnglishGreetingModule;
@@ -37,4 +37,4 @@ To import the source code into the Eclipse IDE you can create the necessary `.pr
 ```
 ./gradlew eclipse
 ```
-and the `Import/Existing Projects into Workspace` with `Search for nested projects` option switched `on` within Eclipse.
+and then `Import/Existing Projects into Workspace` with `Search for nested projects` option switched `on` within Eclipse.
