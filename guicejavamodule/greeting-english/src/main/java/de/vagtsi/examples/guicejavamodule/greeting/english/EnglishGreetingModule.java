@@ -11,7 +11,7 @@ public class EnglishGreetingModule extends AbstractModule {
   
   @ProvidesIntoSet
   @Singleton
-  public GreetingService frenchGreetingService() {
+  public GreetingService englishGreetingService() {
     return new EnglishGreetingServiceImpl();
   }
 }

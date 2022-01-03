@@ -1,0 +1,107 @@
+@startuml
+hide empty members
+
+package com.google.inject {
+	interface Injector
+	interface Module
+}
+
+package "api" {
+	class "SimpleExtensionRegistry<T>" as SimpleExtensionRegistry_T_ {
+		+SimpleExtensionRegistry(type: Class<T>)
+		+{static} create(type: Class<T>): SimpleExtensionRegistry<T>
+	}
+	interface "ExtensionRegistry<T>" as ExtensionRegistry_T_ {
+		+registerExtension(extension: T): void
+		+unregisterExtension(extension: T): void
+		+getAllExtensions(): List<T>
+		+getExtensionType(): Class<T>
+	}
+	ExtensionRegistry_T_ <|.. SimpleExtensionRegistry_T_
+}
+
+package "greeting-core" {
+	interface GreetingService {
+		hello(): String
+	}
+	
+	class GreetingCoreModule {
+		+greetingServiceRegistry(): ExtensionRegistry
+	}
+	class AbstractModule {
+	}
+	AbstractModule <|-- GreetingCoreModule
+}
+
+package "greeting-french" {
+class FrenchGreetingServiceImpl {
+	+hello(): String
+}
+interface GreetingService {
+}
+GreetingService <|.. FrenchGreetingServiceImpl
+class FrenchGreetingModule  {
+	+frenchGreetingService(): GreetingService
+}
+class AbstractModule {
+}
+AbstractModule <|-- FrenchGreetingModule
+}
+
+package "greeting-german" {
+class GermanGreetingModule {
+	+germanGreetingService(): GreetingService
+}
+class AbstractModule {
+}
+AbstractModule <|-- GermanGreetingModule
+class GermanGreetingServiceImpl {
+	+hello(): String
+}
+interface GreetingService {
+}
+GreetingService <|.. GermanGreetingServiceImpl
+}
+
+package "greeting-english" {
+class EnglishGreetingModule {
+	+englishGreetingService(): GreetingService
+}
+class AbstractModule {
+}
+AbstractModule <|-- EnglishGreetingModule
+class EnglishGreetingServiceImpl {
+	+hello(): String
+}
+interface GreetingService {
+}
+GreetingService <|.. EnglishGreetingServiceImpl
+}
+
+package "app" {
+	class GuiceModuleApp {
+		+{static} main(args: String[]): void
+		-init(): void
+	}
+	class PluginModule {
+		-javaModule: Module
+		-guiceModule: com.google.inject.Module
+		-injector: Injector
+		+isInitialized(): boolean
+		+moduleName(): String
+		+javaModule(): Module
+		+setParentPlugin(parentPlugin: PluginModule): void
+		+extensionRegistries(): Set<ExtensionRegistry>
+		+initialize(): void
+	}
+	PluginModule --> "1" PluginModule : parentPlugin
+	class PluginModuleLoader [[java:de.vagtsi.examples.guicejavamodule.app.PluginModuleLoader]] {
+		+{static} loadPluginModules(): Map<String,PluginModule>
+		-{static} resolveDependencies(pluginModules: Map<String,PluginModule>): void
+	}
+}
+
+"app" --> "greeting-core"
+"app" --> "api"
+
+@enduml
