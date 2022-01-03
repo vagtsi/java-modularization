@@ -9,12 +9,12 @@ public class FrenchGreetingServiceImpl implements GreetingService {
 	private static final Logger log = LoggerFactory.getLogger(FrenchGreetingServiceImpl.class.getSimpleName());
 
 	public FrenchGreetingServiceImpl() {
-		log.info("Created french greeting service");
+		log.info("Created French greeting service");
 	}
 
 	@Override
 	public String hello() {
-		return "salut!";
+		return "Salut!";
 	}
 
 }

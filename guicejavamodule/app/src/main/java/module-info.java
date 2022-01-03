@@ -6,6 +6,8 @@ module plugin.app {
   requires plugin.api;
   requires plugin.greeting.core;
   requires plugin.greeting.french;
+  requires plugin.greeting.english;
+  requires plugin.greeting.german;
 
   uses com.google.inject.Module;
 }
