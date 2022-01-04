@@ -4,11 +4,12 @@ hide empty members
 package com.google.inject {
 	interface Injector
 	interface Module
+	class AbstractModule
+	Module <|- AbstractModule
 }
 
 package "api" {
 	class "SimpleExtensionRegistry<T>" as SimpleExtensionRegistry_T_ {
-		+SimpleExtensionRegistry(type: Class<T>)
 		+{static} create(type: Class<T>): SimpleExtensionRegistry<T>
 	}
 	interface "ExtensionRegistry<T>" as ExtensionRegistry_T_ {
@@ -18,6 +19,18 @@ package "api" {
 		+getExtensionType(): Class<T>
 	}
 	ExtensionRegistry_T_ <|.. SimpleExtensionRegistry_T_
+	
+	class "SimpleNamedExtensionRegistry<T>" as SimpleNamedExtensionRegistry_T_  {
+		+{static} create(type: Class<T>): SimpleNamedExtensionRegistry<T>
+	}
+	interface "NamedExtensionRegistry<T>" as NamedExtensionRegistry_T_ {
+		+registerExtension(name: String, extension: Provider<T>): void
+		+unregisterExtension(name: String): void
+		+getAllExtensionNames(): Set<String>
+		+getExtensionByName(name: String): T
+		+getExtensionType(): Class<T>
+	}
+	NamedExtensionRegistry_T_ <|.. SimpleNamedExtensionRegistry_T_
 }
 
 package "greeting-core" {
@@ -28,56 +41,80 @@ package "greeting-core" {
 	class GreetingCoreModule {
 		+greetingServiceRegistry(): ExtensionRegistry
 	}
-	class AbstractModule {
-	}
 	AbstractModule <|-- GreetingCoreModule
 }
 
 package "greeting-french" {
-class FrenchGreetingServiceImpl {
-	+hello(): String
-}
-interface GreetingService {
-}
-GreetingService <|.. FrenchGreetingServiceImpl
-class FrenchGreetingModule  {
-	+frenchGreetingService(): GreetingService
-}
-class AbstractModule {
-}
-AbstractModule <|-- FrenchGreetingModule
+	class FrenchGreetingServiceImpl {
+		+hello(): String
+	}
+	interface GreetingService {
+	}
+	GreetingService <|.. FrenchGreetingServiceImpl
+	class FrenchGreetingModule  {
+		+frenchGreetingService(): GreetingService
+	}
+	AbstractModule <|-- FrenchGreetingModule
 }
 
 package "greeting-german" {
-class GermanGreetingModule {
-	+germanGreetingService(): GreetingService
-}
-class AbstractModule {
-}
-AbstractModule <|-- GermanGreetingModule
-class GermanGreetingServiceImpl {
-	+hello(): String
-}
-interface GreetingService {
-}
-GreetingService <|.. GermanGreetingServiceImpl
+	class GermanGreetingModule {
+		+germanGreetingService(): GreetingService
+	}
+	AbstractModule <|-- GermanGreetingModule
+	class GermanGreetingServiceImpl {
+		+hello(): String
+	}
+	interface GreetingService {
+	}
+	GreetingService <|.. GermanGreetingServiceImpl
 }
 
 package "greeting-english" {
-class EnglishGreetingModule {
-	+englishGreetingService(): GreetingService
-}
-class AbstractModule {
-}
-AbstractModule <|-- EnglishGreetingModule
-class EnglishGreetingServiceImpl {
-	+hello(): String
-}
-interface GreetingService {
-}
-GreetingService <|.. EnglishGreetingServiceImpl
+	class EnglishGreetingModule {
+		+englishGreetingService(): GreetingService
+	}
+	AbstractModule <|-- EnglishGreetingModule
+	class EnglishGreetingServiceImpl {
+		+hello(): String
+	}
+	interface GreetingService {
+	}
+	GreetingService <|.. EnglishGreetingServiceImpl
 }
 
+package "database-core" {
+	class DatabaseCoreModule {
+		+databaseServiceRegistry(): NamedExtensionRegistry
+	}
+	AbstractModule <|-- DatabaseCoreModule
+
+	interface DatabaseService {
+		+databaseName(): String
+	}
+}
+package "database-mongo" {
+	class MongoDatabaseServiceImpl {
+		+databaseName(): String
+	}
+	DatabaseService <|.. MongoDatabaseServiceImpl
+
+	class MongoDatabaseModule {
+		+mongodbDatabaseService(): DatabaseService
+	}
+	AbstractModule <|-- MongoDatabaseModule
+}
+package "database-postgres" {
+	class PostgresDatabaseServiceImpl {
+		+databaseName(): String
+	}
+	DatabaseService <|.. PostgresDatabaseServiceImpl
+	class PostgresDatabaseModule {
+		+postgresDatabaseService(): DatabaseService
+	}
+	AbstractModule <|-- PostgresDatabaseModule
+}
+ 
 package "app" {
 	class GuiceModuleApp {
 		+{static} main(args: String[]): void

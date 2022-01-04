@@ -15,6 +15,9 @@ dependencies {
     // JSR-330 dependency injection with Guice
     api "com.google.inject:guice:5.0.1"
 
+    // javax.inject with JPMS support
+	implementation 'jakarta.inject:jakarta.inject-api:1.0.3'
+	
     implementation 'org.slf4j:slf4j-api:1.7.32'
 }
 

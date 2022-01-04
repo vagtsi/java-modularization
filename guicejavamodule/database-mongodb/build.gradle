@@ -1,7 +1,6 @@
 plugins {
     id 'java-library'
     id 'eclipse'
-    id 'application'
 }
 
 repositories {
@@ -11,13 +10,7 @@ repositories {
 
 dependencies {
     implementation project(':api')
-    implementation project(':greeting-core')
-    implementation project(':greeting-french')
-    implementation project(':greeting-german')
-    implementation project(':greeting-english')
     implementation project(':database-core')
-    implementation project(':database-mongodb')
-    implementation project(':database-postgres')
 
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
@@ -29,12 +22,6 @@ dependencies {
 	implementation 'jakarta.inject:jakarta.inject-api:1.0.3'
 	
 	implementation 'org.slf4j:slf4j-api:1.7.32'
-	implementation 'ch.qos.logback:logback-classic:1.2.9'
-}
-
-application {
-    mainModule = 'plugin.app'
-    mainClass = 'de.vagtsi.examples.guicejavamodule.app.GuiceModuleApp' 
 }
 
 tasks.named('test') {
