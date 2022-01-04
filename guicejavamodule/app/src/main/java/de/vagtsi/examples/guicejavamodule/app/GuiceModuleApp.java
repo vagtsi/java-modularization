@@ -19,11 +19,6 @@ public class GuiceModuleApp {
     // load all plugins
     Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginModules();
 
-    // initialize all plugin modules (dependencies implicitly first)
-    for (PluginModule pluginModule : pluginModules.values()) {
-      pluginModule.initialize();
-    }
-
     // call/print out all plugged in GreetingServices
     PluginModule coreModule = pluginModules.get("plugin.greeting.core");
     @SuppressWarnings("unchecked")

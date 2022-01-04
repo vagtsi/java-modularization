@@ -27,6 +27,7 @@ public class PluginModuleLoader {
    * @return map of all found modules in the module path with module name as key
    */
   public static Map<String, PluginModule> loadPluginModules() {
+    long start = System.currentTimeMillis();
     log.info("Scanning for all plugin modules");
     ServiceLoader<Module> pluginLoader = ServiceLoader.load(com.google.inject.Module.class);
     Map<String, PluginModule> pluginModules = pluginLoader.stream()
@@ -37,6 +38,15 @@ public class PluginModuleLoader {
     log.info("> found {} plugin modules: {}", pluginModules.size(), pluginModules.keySet());
     
     resolveDependencies(pluginModules);
+    
+    // initialize all plugin modules (dependencies implicitly first)
+    for (PluginModule pluginModule : pluginModules.values()) {
+      pluginModule.initialize();
+    }
+    
+    long duration = System.currentTimeMillis() - start;
+    log.info("> finished initialization of {} plugins within {} ms",
+        pluginModules.size(), duration);
     
     return pluginModules;
   }

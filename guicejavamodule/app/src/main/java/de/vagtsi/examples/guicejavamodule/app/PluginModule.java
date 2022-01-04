@@ -2,17 +2,14 @@ package de.vagtsi.examples.guicejavamodule.app;
 
 import java.util.Map;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.google.inject.Binding;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
-
 import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
 
 /**
@@ -52,6 +49,7 @@ public class PluginModule {
     return moduleName();
   }
 
+  @SuppressWarnings("rawtypes")
   public Set<ExtensionRegistry> extensionRegistries() {
     if (!isInitialized()) {
       throw new IllegalStateException("Module not initialized!");
@@ -60,6 +58,7 @@ public class PluginModule {
     return injector.getInstance(Key.get(setOf(ExtensionRegistry.class)));
   }
 
+  @SuppressWarnings("unchecked")
   public void initialize() {
     if (isInitialized()) {
       return;
@@ -84,7 +83,7 @@ public class PluginModule {
     // register all extensions (if any)
     if (registries != null) {
       log.info("Registering extensions to {} registries of parent plugin {}", registries.size(), parentPlugin);
-      for (ExtensionRegistry registry : registries) {
+      for (@SuppressWarnings("rawtypes") ExtensionRegistry registry : registries) {
         Class<?> extensionType = registry.getExtensionType();
         Set<?> extensions = injector.getInstance(Key.get(setOf(extensionType)));
         if (!extensions.isEmpty()) {
