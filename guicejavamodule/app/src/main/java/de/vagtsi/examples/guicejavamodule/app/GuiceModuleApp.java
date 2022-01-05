@@ -1,5 +1,7 @@
 package de.vagtsi.examples.guicejavamodule.app;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,7 +22,12 @@ public class GuiceModuleApp {
 
   private void init() {
     // load all plugins from module path (all modules "requires" by this app module)
-    Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginsFromModulePath();
+    //Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginsFromModulePath();
+
+    // load all plugins (jars) dynamically from plugin directory
+    Path projectDir = Paths.get(".").normalize().toAbsolutePath();
+    Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginsFromDirectory(
+        projectDir.resolve("build/libs/plugins"));
 
     // call/print out all plugged in GreetingServices
     PluginModule coreModule = pluginModules.get("plugin.greeting.core");

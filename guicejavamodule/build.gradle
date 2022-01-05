@@ -1,0 +1,39 @@
+//defines configurations with a global scope for all subprojects
+subprojects {
+	repositories {
+	    // Use Maven Central for resolving dependencies.
+	    mavenCentral()
+	}
+	
+	apply plugin: 'java-library'
+    apply plugin: 'eclipse'
+	
+	dependencies {
+	    // Use JUnit Jupiter for testing.
+	    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+	    
+	    // JSR-330 dependency injection with Guice
+	    api "com.google.inject:guice:5.0.1"
+	    
+	    // javax.inject with JPMS support
+		implementation 'jakarta.inject:jakarta.inject-api:1.0.3'
+		
+		implementation 'org.slf4j:slf4j-api:1.7.32'
+	}
+	
+	tasks.named('test') {
+    	// Use JUnit Platform for unit tests.
+    	useJUnitPlatform()
+	}
+	
+	ext {
+		// the runtime plugin directory
+		pluginDir = "${project(':app').buildDir}/libs/plugins"
+	}
+	
+	// suppress compiler warnings about "requires transitive directive for an automatic module"
+	// created by javax.inject and guice module usage
+	compileJava {
+		options.compilerArgs += '-Xlint:-requires-transitive-automatic'
+	}
+}

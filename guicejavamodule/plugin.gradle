@@ -1,0 +1,8 @@
+// copy built plugin jar to application plugins folder
+// to be applied to dynamic plugins only!   
+task copyJarToPluginDir(type: Copy, dependsOn:jar) {
+ from jar
+ into "$pluginDir"
+}
+
+build.dependsOn copyJarToPluginDir
