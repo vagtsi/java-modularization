@@ -26,7 +26,7 @@ public class PluginModuleLoader {
    * Load all Guice plugin modules via service loader according to provided the type {@link Module}. 
    * @return map of all found modules in the module path with module name as key
    */
-  public static Map<String, PluginModule> loadPluginModules() {
+  public static Map<String, PluginModule> loadPluginsFromModulePath() {
     long start = System.currentTimeMillis();
     log.info("Scanning for all plugin modules");
     ServiceLoader<Module> pluginLoader = ServiceLoader.load(com.google.inject.Module.class);

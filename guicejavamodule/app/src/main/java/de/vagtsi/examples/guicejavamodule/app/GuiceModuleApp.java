@@ -19,8 +19,8 @@ public class GuiceModuleApp {
   }
 
   private void init() {
-    // load all plugins
-    Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginModules();
+    // load all plugins from module path (all modules "requires" by this app module)
+    Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginsFromModulePath();
 
     // call/print out all plugged in GreetingServices
     PluginModule coreModule = pluginModules.get("plugin.greeting.core");
