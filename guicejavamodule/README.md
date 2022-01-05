@@ -38,3 +38,5 @@ To import the source code into the Eclipse IDE you can create the necessary `.pr
 ./gradlew eclipse
 ```
 and then `Import/Existing Projects into Workspace` with `Search for nested projects` option switched `on` within Eclipse.
+
+Please note: the generation of Eclipse files with Gradle is necessary until the [Eclipse Buildship plugin](https://projects.eclipse.org/projects/tools.buildship) supports Java modules (see [Support Jigsaw projects](https://github.com/eclipse/buildship/issues/658)).
