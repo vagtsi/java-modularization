@@ -1,6 +1,13 @@
 @startuml
 hide empty members
 
+skinparam package {
+ backgroundColor Lightblue
+}
+skinparam class {
+ backgroundColor Whitesmoke 
+}
+
 title Class and module dependencies 
 
 package com.google.inject {
@@ -69,6 +76,19 @@ package "greeting-core" {
 	AbstractModule <|-- GreetingCoreModule
 }
 
+package "database-core" {
+	class DatabaseCoreModule {
+		+databaseServiceRegistry(): NamedExtensionRegistry
+	}
+	AbstractModule <|-- DatabaseCoreModule
+
+	interface DatabaseService {
+		+databaseName(): String
+	}
+}
+
+rectangle "dynamic plugins" #Skyblue {
+
 package "greeting-french" {
 	class FrenchGreetingServiceImpl {
 		+hello(): String
@@ -108,16 +128,6 @@ package "greeting-english" {
 	GreetingService <|.. EnglishGreetingServiceImpl
 }
 
-package "database-core" {
-	class DatabaseCoreModule {
-		+databaseServiceRegistry(): NamedExtensionRegistry
-	}
-	AbstractModule <|-- DatabaseCoreModule
-
-	interface DatabaseService {
-		+databaseName(): String
-	}
-}
 package "database-mongo" {
 	class MongoDatabaseServiceImpl {
 		+databaseName(): String
@@ -139,7 +149,8 @@ package "database-postgres" {
 	}
 	AbstractModule <|-- PostgresDatabaseModule
 }
- 
+}
+
 package "application" {
 	class GuiceModuleApp {
 		+{static} main(args: String[]): void

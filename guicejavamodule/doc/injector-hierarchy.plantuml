@@ -1,8 +1,9 @@
 @startuml
 hide empty members
-'skinparam backgroundColor #EEEBDC
-'skinparam defaultFontName Arial
-'skinparam handwritten true
+
+skinparam object {
+ backgroundColor Lightblue 
+}
 
 title Injector hierarchy
 

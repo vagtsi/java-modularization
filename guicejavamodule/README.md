@@ -27,7 +27,7 @@ to get automatically registered at the appropriate `ExtensionRegistry`.
 At runtime we get following injector inheritance. The `SystemInjector` is not created in this example but would be the choice for providing any system services to be injected in real world scenarios:
 ![Injector hierarchy](doc/injector-hierarchy.png "Injector hierarchy")
 
-As the following UML diagram of the complete code example shows, the final `application` is only depending on the core plugins `greeting-core` and `database-core` defining the service interfaces, it needs to deal with. There is no compile time and runtime dependency needed. All plugins are loaded as `jar` files from a directory by creating a dedicated [ModuleLayer](https://docs.oracle.com/javase/9/docs/api/java/lang/ModuleLayer.html) which even calculated the dependency graph of all plugins automatically.
+As the following UML diagram of the complete code example shows, the final `application` is only depending on the core plugins `greeting-core` and `database-core` defining the service interfaces, it needs to deal with. There is no compile time nor a runtime dependency needed. All extension plugins are dynamically loaded as `jar` files from a directory by creating a dedicated [ModuleLayer](https://docs.oracle.com/javase/9/docs/api/java/lang/ModuleLayer.html) which even calculated the dependency graph of all plugins automatically.
 
 ![UML diagram](doc/java-guice-pluginmodule.png "UML class diagram")
 
