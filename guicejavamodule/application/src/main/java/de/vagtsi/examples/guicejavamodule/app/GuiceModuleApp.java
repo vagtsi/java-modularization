@@ -48,7 +48,7 @@ public class GuiceModuleApp {
     NamedExtensionRegistry<DatabaseService> dbRegistry = dbCoreModule.namedExtensionRegistries().get("database");
     Set<String> names = dbRegistry.getAllExtensionNames();
     log.info("{} DatabaseServices are registered {}", names.size(), names);
-    DatabaseService databaseService = dbRegistry.getExtensionByName("postgres");
+    DatabaseService databaseService = dbCoreModule.getService(DatabaseService.class);
     log.info("> succesful retrieved database service {}", databaseService.databaseName());
   }
 }

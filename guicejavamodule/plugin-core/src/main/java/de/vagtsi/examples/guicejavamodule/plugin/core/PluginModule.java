@@ -105,26 +105,11 @@ public class PluginModule {
     log.info("> finished initialization of plugin module '{}'", moduleName());
   }
 
-  private String bindingsStartupMessage(Injector injector) {
-    Map<Key<?>, Binding<?>> bindings = injector.getAllBindings();
-
-    StringBuilder sb = new StringBuilder(System.lineSeparator());
-    sb.append(String.format("--------- Dependency injection for %s initialised with %d bindings -----------%n", moduleName(), bindings.size()));
-
-    bindings.forEach((k, v) -> {
-      sb.append("\t").append(k.getTypeLiteral());
-      if (k.getAnnotationType() != null) {
-        sb.append(" (annotation=").append(k.getAnnotation()).append(")");
-      }
-      sb.append(System.lineSeparator());
-    });
-
-    sb.append("---------------------------------------------------------------------------------");
-    return sb.toString();
+  public <T> T getService(Class<T> type) {
+    return injector().getInstance(type);
   }
 
   // ---- private ----
-
 
   private Injector injector() {
     if (!isInitialized()) {
@@ -132,7 +117,7 @@ public class PluginModule {
     }
     return injector;
   }
-
+  
   @SuppressWarnings({"rawtypes", "unchecked"})
   private void registerExtensions() {
     if (parentPlugin == null) {
@@ -166,6 +151,24 @@ public class PluginModule {
         }
       }
     }
+  }
+
+  private String bindingsStartupMessage(Injector injector) {
+    Map<Key<?>, Binding<?>> bindings = injector.getAllBindings();
+
+    StringBuilder sb = new StringBuilder(System.lineSeparator());
+    sb.append(String.format("--------- Dependency injection for %s initialised with %d bindings -----------%n", moduleName(), bindings.size()));
+
+    bindings.forEach((k, v) -> {
+      sb.append("\t").append(k.getTypeLiteral());
+      if (k.getAnnotationType() != null) {
+        sb.append(" (annotation=").append(k.getAnnotation()).append(")");
+      }
+      sb.append(System.lineSeparator());
+    });
+
+    sb.append("---------------------------------------------------------------------------------");
+    return sb.toString();
   }
 
   @SuppressWarnings("unchecked")
