@@ -74,6 +74,10 @@ package "greeting-core" {
 		+greetingServiceRegistry(): ExtensionRegistry
 	}
 	AbstractModule <|-- GreetingCoreModule
+	
+	class ExampleCoreService {
+		sayHello(): String
+	}
 }
 
 package "database-core" {
@@ -126,6 +130,8 @@ package "greeting-english" {
 	interface GreetingService {
 	}
 	GreetingService <|.. EnglishGreetingServiceImpl
+	
+	EnglishGreetingServiceImpl ..> ExampleCoreService : injected
 }
 
 package "database-mongo" {

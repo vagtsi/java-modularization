@@ -4,4 +4,6 @@ module plugin.core {
   requires transitive com.google.guice;
   requires transitive org.slf4j;
   requires transitive java.inject;
+  
+  uses com.google.inject.Module;
 }

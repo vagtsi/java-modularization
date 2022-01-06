@@ -14,7 +14,8 @@ The general idea is to expose Guice module definitions as java service as explai
   ServiceLoader<Module> pluginLoader = ServiceLoader.load(com.google.inject.Module.class);
  ```
  
-Additionally this example creates one `Injector` instance for each module/plugin. In case of parent module dependencies defined by `requires` within the `module-info.java`, the `Injector` is created as child injector of that parent module in order to access any provided instances via `@Inject`. Extension services just need to be provided in their Guice module
+Additionally this example creates one `Injector` instance for each module/plugin. In case of parent module dependencies defined by `requires` within the `module-info.java`, the `Injector` is created as child injector of that parent module in order to access any provided instances via `@Inject`. As example the `EnglishGreetingServiceImpl` within the plugin `greeting-english` gets injected the `ExampleCoreService` provided by its parent plugin `greeting-core`.
+To provide extension services, the service implementations just need to be provided in their Guice module
 ```
   @ProvidesIntoSet
   @Singleton

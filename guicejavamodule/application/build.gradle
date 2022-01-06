@@ -16,6 +16,6 @@ dependencies {
 }
 
 application {
-    mainModule = 'plugin.app'
+    mainModule = 'application'
     mainClass = 'de.vagtsi.examples.guicejavamodule.app.GuiceModuleApp' 
 }

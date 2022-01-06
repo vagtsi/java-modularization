@@ -14,5 +14,4 @@ module application {
 //  requires plugin.database.mongodb;
 //  requires plugin.database.postgres;
 
-  uses com.google.inject.Module;
 }
