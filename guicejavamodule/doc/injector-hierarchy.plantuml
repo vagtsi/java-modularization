@@ -1,0 +1,29 @@
+@startuml
+hide empty members
+'skinparam backgroundColor #EEEBDC
+'skinparam defaultFontName Arial
+'skinparam handwritten true
+
+title Injector hierarchy
+
+object SystemInjector #Lightgray
+
+object GreetingCoreInjector
+object GreetingEnglishInjector
+object GreetingFrenchInjector
+object GreetingGermanInjector
+
+SystemInjector <|-- GreetingCoreInjector
+GreetingCoreInjector <|-- GreetingFrenchInjector
+GreetingCoreInjector <|-- GreetingEnglishInjector
+GreetingCoreInjector <|-- GreetingGermanInjector
+
+object DatabaseCoreInjector
+object MongoInjector
+object PostgresInjector
+
+SystemInjector <|-- DatabaseCoreInjector
+DatabaseCoreInjector <|-- MongoInjector
+DatabaseCoreInjector <|-- PostgresInjector
+
+@enduml

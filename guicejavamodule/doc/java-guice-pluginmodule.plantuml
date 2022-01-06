@@ -1,6 +1,8 @@
 @startuml
 hide empty members
 
+title Class and module dependencies 
+
 package com.google.inject {
 	interface Injector
 	interface Module
