@@ -24,6 +24,8 @@ Additionally this example creates one `Injector` instance for each module/plugin
 ```
 to get automatically registered at the appropriate `ExtensionRegistry`.
 
+As the following UML diagram of the complete code example shows, the final `application` is only depending on the core plugins `greeting-core` and `database-core` defining the service interfaces, it needs to deal with. There is no compile time and runtime dependency needed. All plugins are loaded as `jar` files from a directory by creating a dedicated [ModuleLayer](https://docs.oracle.com/javase/9/docs/api/java/lang/ModuleLayer.html) which even calculated the dependency graph of all plugins automatically.
+
 ![UML diagram](doc/java-guice-pluginmodule.png "UML class diagram")
 
 ## Compile and run
