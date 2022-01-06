@@ -11,6 +11,8 @@ import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.api.NamedExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.database.core.DatabaseService;
 import de.vagtsi.examples.guicejavamodule.greeting.core.GreetingService;
+import de.vagtsi.examples.guicejavamodule.plugin.core.PluginModule;
+import de.vagtsi.examples.guicejavamodule.plugin.core.PluginModuleLoader;
 
 public class GuiceModuleApp {
   private static final Logger log = LoggerFactory.getLogger(GuiceModuleApp.class.getSimpleName());

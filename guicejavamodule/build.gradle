@@ -28,7 +28,7 @@ subprojects {
 	
 	ext {
 		// the runtime plugin directory
-		pluginDir = "${project(':app').buildDir}/libs/plugins"
+		pluginDir = "${project(':application').buildDir}/libs/plugins"
 	}
 	
 	// suppress compiler warnings about "requires transitive directive for an automatic module"

@@ -1,6 +1,7 @@
 
 rootProject.name = 'guicejavamodule'
-include('api')
+include('plugin-api')
+include('plugin-core')
 include('greeting-core')
 include('greeting-french')
 include('greeting-english')
@@ -8,4 +9,4 @@ include('greeting-german')
 include('database-core')
 include('database-mongodb')
 include('database-postgres')
-include('app')
+include('application')

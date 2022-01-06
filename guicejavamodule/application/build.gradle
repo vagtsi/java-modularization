@@ -2,7 +2,8 @@ plugins {
     id 'application'
 }
 dependencies {
-    implementation project(':api')
+    implementation project(':plugin-api')
+    implementation project(':plugin-core')
     implementation project(':greeting-core')
 //    implementation project(':greeting-french')
 //    implementation project(':greeting-german')

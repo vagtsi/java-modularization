@@ -1,4 +1,4 @@
-package de.vagtsi.examples.guicejavamodule.app;
+package de.vagtsi.examples.guicejavamodule.plugin.core;
 
 import java.util.Collections;
 import java.util.Map;

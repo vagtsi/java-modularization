@@ -1,4 +1,4 @@
-package de.vagtsi.examples.guicejavamodule.app;
+package de.vagtsi.examples.guicejavamodule.plugin.core;
 
 import java.lang.module.Configuration;
 import java.lang.module.ModuleDescriptor;

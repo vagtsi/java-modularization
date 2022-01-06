@@ -1,9 +1,10 @@
-module plugin.app {
+module application {
   requires com.google.guice;
   requires java.inject;
   requires org.slf4j;
 
   requires plugin.api;
+  requires plugin.core;
   requires plugin.greeting.core;
 //  requires plugin.greeting.french;
 //  requires plugin.greeting.english;
