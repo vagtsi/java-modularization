@@ -9,9 +9,6 @@ public class PostgresDatabaseModule extends AbstractModule {
 
   @ProvidesIntoMap
   @StringMapKey("postgres")
-  // public Provider<DatabaseService> postgresDatabaseService() {
-  // return PostgresDatabaseServiceImpl::new;
-  // }
   public DatabaseService postgresDatabaseService() {
     return new PostgresDatabaseServiceImpl();
   }
