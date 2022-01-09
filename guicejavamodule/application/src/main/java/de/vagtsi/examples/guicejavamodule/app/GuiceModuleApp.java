@@ -11,7 +11,7 @@ import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.api.NamedExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.database.core.DatabaseService;
 import de.vagtsi.examples.guicejavamodule.greeting.core.GreetingService;
-import de.vagtsi.examples.guicejavamodule.plugin.core.PluginModule;
+import de.vagtsi.examples.guicejavamodule.plugin.core.Plugin;
 import de.vagtsi.examples.guicejavamodule.plugin.core.PluginModuleLoader;
 
 public class GuiceModuleApp {
@@ -28,11 +28,11 @@ public class GuiceModuleApp {
 
     // load all plugins (jars) dynamically from plugin directory
     Path projectDir = Paths.get(".").normalize().toAbsolutePath();
-    Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginsFromDirectory(
+    Map<String, Plugin> pluginModules = PluginModuleLoader.loadPluginsFromDirectory(
         projectDir.resolve("build/libs/plugins"));
 
     // call/print out all plugged in GreetingServices
-    PluginModule coreModule = pluginModules.get("plugin.greeting.core");
+    Plugin coreModule = pluginModules.get("plugin.greeting.core");
     @SuppressWarnings("unchecked")
     ExtensionRegistry<GreetingService> registry = coreModule.extensionRegistries().iterator().next();
     List<GreetingService> services = registry.getAllExtensions();
@@ -43,7 +43,7 @@ public class GuiceModuleApp {
     }
 
     // check named database services
-    PluginModule dbCoreModule = pluginModules.get("plugin.database.core");
+    Plugin dbCoreModule = pluginModules.get("plugin.database.core");
     @SuppressWarnings("unchecked")
     NamedExtensionRegistry<DatabaseService> dbRegistry = dbCoreModule.namedExtensionRegistries().get("database");
     Set<String> names = dbRegistry.getAllExtensionNames();

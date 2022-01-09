@@ -1,24 +1,23 @@
 package de.vagtsi.examples.guicejavamodule.greeting.core;
 
 import javax.inject.Singleton;
-import com.google.inject.AbstractModule;
+
 import com.google.inject.Provides;
-import com.google.inject.multibindings.ProvidesIntoSet;
-import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
+
+import de.vagtsi.examples.guicejavamodule.api.PluginModule;
 import de.vagtsi.examples.guicejavamodule.api.SimpleExtensionRegistry;
 
-public class GreetingCoreModule extends AbstractModule {
-  @SuppressWarnings({"rawtypes", "exports"})
-  @ProvidesIntoSet
-  @Singleton
-  public ExtensionRegistry greetingServiceRegistry() {
-    return SimpleExtensionRegistry.create(GreetingService.class);
-  }
-  
-  //provide example service to be injected into child plugins/injectors
-  @Provides
-  @Singleton
-  public ExampleCoreService exampleCoreService() {
-    return new ExampleCoreService();
-  }
+public class GreetingCoreModule extends PluginModule {
+	@Override
+	protected void configure() {
+		//register extension registry
+		bindExtensionRegistry(SimpleExtensionRegistry.create(GreetingService.class));
+	}
+
+	// provide example service to be injected into child plugins/injectors
+	@Provides
+	@Singleton
+	public ExampleCoreService exampleCoreService() {
+		return new ExampleCoreService();
+	}
 }

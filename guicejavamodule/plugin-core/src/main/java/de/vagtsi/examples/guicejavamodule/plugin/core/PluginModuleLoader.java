@@ -27,7 +27,7 @@ public class PluginModuleLoader {
    * from the given file system directory.
    * @return map of all found modules in the directory with module name as key
    */
-  public static Map<String, PluginModule> loadPluginsFromDirectory(Path pluginsDir) {
+  public static Map<String, Plugin> loadPluginsFromDirectory(Path pluginsDir) {
     long start = System.currentTimeMillis();
     log.info("Scanning for all plugin modules in directory {}", pluginsDir);
 
@@ -57,7 +57,7 @@ public class PluginModuleLoader {
     ServiceLoader<Module> pluginLoader = ServiceLoader.load(layer, com.google.inject.Module.class);
     
     // finally: load the guice modules (services) from the plugins and initialize all injectors
-    Map<String, PluginModule> pluginModules = initializePluginModules(pluginLoader);
+    Map<String, Plugin> pluginModules = initializePluginModules(pluginLoader);
     
     long duration = System.currentTimeMillis() - start;
     log.info("> finished initialization of {} plugins within {} ms",
@@ -70,11 +70,11 @@ public class PluginModuleLoader {
    * Load all Guice plugin modules via service loader according to provided the type {@link Module}. 
    * @return map of all found modules in the module path with module name as key
    */
-  public static Map<String, PluginModule> loadPluginsFromModulePath() {
+  public static Map<String, Plugin> loadPluginsFromModulePath() {
     long start = System.currentTimeMillis();
     log.info("Scanning for all plugin modules in module path");
     ServiceLoader<Module> pluginLoader = ServiceLoader.load(com.google.inject.Module.class);
-    Map<String, PluginModule> pluginModules = initializePluginModules(pluginLoader);
+    Map<String, Plugin> pluginModules = initializePluginModules(pluginLoader);
     
     long duration = System.currentTimeMillis() - start;
     log.info("> finished initialization of {} plugins within {} ms",
@@ -94,18 +94,18 @@ public class PluginModuleLoader {
    * @param loader the plaugin (servive) loader for retrieving the Guice modules
    * @return all initialized plugin modules, ready to be used
    */
-  private static Map<String, PluginModule> initializePluginModules(ServiceLoader<Module> loader) {
-    Map<String, PluginModule> pluginModules = loader.stream()
+  private static Map<String, Plugin> initializePluginModules(ServiceLoader<Module> loader) {
+    Map<String, Plugin> pluginModules = loader.stream()
         .map(Provider::get)
-        .map(PluginModule::new)
-        .collect(Collectors.toConcurrentMap(PluginModule::moduleName, Function.identity()));
+        .map(Plugin::new)
+        .collect(Collectors.toConcurrentMap(Plugin::moduleName, Function.identity()));
 
     log.info("> found {} plugin modules in module path: {}", pluginModules.size(), pluginModules.keySet());
     
     resolveDependencies(pluginModules);
     
     // initialize all plugin modules (dependencies implicitly first)
-    for (PluginModule pluginModule : pluginModules.values()) {
+    for (Plugin pluginModule : pluginModules.values()) {
       pluginModule.initialize();
     }
     
@@ -115,10 +115,10 @@ public class PluginModuleLoader {
   /**
    * Resolve plugin dependcies according to the java module requirements 
    */
-  private static void resolveDependencies(Map<String, PluginModule> pluginModules) {
-    for (PluginModule pluginModule : pluginModules.values()) {
+  private static void resolveDependencies(Map<String, Plugin> pluginModules) {
+    for (Plugin pluginModule : pluginModules.values()) {
       ModuleDescriptor descriptor = pluginModule.javaModule().getDescriptor();
-      List<PluginModule> dependencies = descriptor.requires().stream()
+      List<Plugin> dependencies = descriptor.requires().stream()
           .map(r -> pluginModules.get(r.name()))
           .filter(Objects::nonNull)
           .collect(Collectors.toList());

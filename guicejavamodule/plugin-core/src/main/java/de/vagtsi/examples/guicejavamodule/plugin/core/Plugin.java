@@ -17,15 +17,15 @@ import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.api.NamedExtensionRegistry;
 
 /**
- * Instance of a Java (plugin) module using Guice as dependency injection framework.
+ * Instance of a plugin being a Java module using Guice as dependency injection framework.
  */
-public class PluginModule {
-  private static final Logger log = LoggerFactory.getLogger(PluginModule.class.getSimpleName());
+public class Plugin {
+  private static final Logger log = LoggerFactory.getLogger(Plugin.class.getSimpleName());
 
   private final Module javaModule;
   private final com.google.inject.Module guiceModule;
   private Injector injector;
-  private PluginModule parentPlugin;
+  private Plugin parentPlugin;
 
   @SuppressWarnings("rawtypes")
   private Set<ExtensionRegistry> registries;
@@ -33,7 +33,7 @@ public class PluginModule {
   @SuppressWarnings("rawtypes")
   private Map<String, NamedExtensionRegistry> namedRegistries;
 
-  public PluginModule(com.google.inject.Module module) {
+  public Plugin(com.google.inject.Module module) {
     guiceModule = module;
     javaModule = module.getClass().getModule();
   }
@@ -50,7 +50,7 @@ public class PluginModule {
     return javaModule;
   }
 
-  public void setParentPlugin(PluginModule parentPlugin) {
+  public void setParentPlugin(Plugin parentPlugin) {
     this.parentPlugin = parentPlugin;
   }
 
