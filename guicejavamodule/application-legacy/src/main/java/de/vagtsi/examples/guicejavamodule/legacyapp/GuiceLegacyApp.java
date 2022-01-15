@@ -17,14 +17,15 @@ import de.vagtsi.examples.guicejavamodule.plugin.core.Plugin;
 import de.vagtsi.examples.guicejavamodule.plugin.core.PluginModuleLoader;
 
 public class GuiceLegacyApp {
-  private static final Logger log = LoggerFactory.getLogger(GuiceLegacyApp.class.getSimpleName());
+  private static final Logger log = LoggerFactory.getLogger(GuiceLegacyApp.class);
 
   public static void main(String[] args) {
     GuiceLegacyApp app = new GuiceLegacyApp();
-    app.init();
+    app.run();
+    log.info("Guice legacy module application finished ---------");
   }
 
-  private void init() {
+  private void run() {
     // load all plugins (jars) dynamically from plugin directory
     Path projectDir = Paths.get(".").normalize().toAbsolutePath();
     Map<String, Plugin> pluginModules = PluginModuleLoader.loadPluginsFromDirectory(

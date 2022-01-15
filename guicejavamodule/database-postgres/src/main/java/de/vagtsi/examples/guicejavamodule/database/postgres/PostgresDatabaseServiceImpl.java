@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import de.vagtsi.examples.guicejavamodule.database.core.DatabaseService;
 
 public class PostgresDatabaseServiceImpl implements DatabaseService {
-  private static final Logger log = LoggerFactory.getLogger(PostgresDatabaseServiceImpl.class.getSimpleName());
+  private static final Logger log = LoggerFactory.getLogger(PostgresDatabaseServiceImpl.class);
 
   public PostgresDatabaseServiceImpl() {
     log.info("Created {} database service", databaseName());

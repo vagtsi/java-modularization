@@ -10,7 +10,7 @@ import de.vagtsi.examples.guicejavamodule.api.NamedExtensionRegistry;
  * Provider for retrieval of single named ("switched on") service instance. 
  */
 public class DatabaseServiceProvider implements Provider<DatabaseService> {
-  private static final Logger log = LoggerFactory.getLogger(DatabaseServiceProvider.class.getSimpleName());
+  private static final Logger log = LoggerFactory.getLogger(DatabaseServiceProvider.class);
 
   private final String databaseType = System.getProperty("database-type", "postgres");
   private NamedExtensionRegistry<DatabaseService> databaseServiceRegistry; 

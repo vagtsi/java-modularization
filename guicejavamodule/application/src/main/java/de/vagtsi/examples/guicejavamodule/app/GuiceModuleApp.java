@@ -15,14 +15,15 @@ import de.vagtsi.examples.guicejavamodule.plugin.core.Plugin;
 import de.vagtsi.examples.guicejavamodule.plugin.core.PluginModuleLoader;
 
 public class GuiceModuleApp {
-  private static final Logger log = LoggerFactory.getLogger(GuiceModuleApp.class.getSimpleName());
+  private static final Logger log = LoggerFactory.getLogger(GuiceModuleApp.class);
 
   public static void main(String[] args) {
     GuiceModuleApp app = new GuiceModuleApp();
-    app.init();
+    app.run();
+    log.info("Guice module application finished ---------");
   }
 
-  private void init() {
+  private void run() {
     // load all plugins from module path (all modules "requires" by this app module)
     //Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginsFromModulePath();
 

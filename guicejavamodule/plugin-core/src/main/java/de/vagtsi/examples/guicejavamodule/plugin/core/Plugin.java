@@ -20,7 +20,7 @@ import de.vagtsi.examples.guicejavamodule.api.NamedExtensionRegistry;
  * Instance of a plugin being a Java module using Guice as dependency injection framework.
  */
 public class Plugin {
-  private static final Logger log = LoggerFactory.getLogger(Plugin.class.getSimpleName());
+  private static final Logger log = LoggerFactory.getLogger(Plugin.class);
 
   private final Module javaModule;
   private final com.google.inject.Module guiceModule;

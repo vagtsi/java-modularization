@@ -20,7 +20,7 @@ import com.google.inject.Module;
  * Utility class for loading all Java Guice plugin modules from class (module) path. 
  */
 public class PluginModuleLoader {
-  private static final Logger log = LoggerFactory.getLogger(PluginModuleLoader.class.getSimpleName());
+  private static final Logger log = LoggerFactory.getLogger(PluginModuleLoader.class);
   
   /**
    * Load all Guice plugin modules dynamically via service loader according to provided the type {@link Module}

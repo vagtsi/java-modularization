@@ -6,7 +6,7 @@ import de.vagtsi.examples.guicejavamodule.greeting.core.ExampleCoreService;
 import de.vagtsi.examples.guicejavamodule.greeting.core.GreetingService;
 
 public class EnglishGreetingServiceImpl implements GreetingService {
-	private static final Logger log = LoggerFactory.getLogger(EnglishGreetingServiceImpl.class.getSimpleName());
+	private static final Logger log = LoggerFactory.getLogger(EnglishGreetingServiceImpl.class);
 
 	public EnglishGreetingServiceImpl(ExampleCoreService exampleCoreService) {
 		log.info("Created English greeting service with injected core service: {}", exampleCoreService.sayHello());
