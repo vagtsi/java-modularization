@@ -15,4 +15,5 @@ public interface NamedExtensionRegistry<T> {
   Set<String> getAllExtensionNames();
   T getExtensionByName(String name);
   Class<T> getExtensionType();
+  String systemProperty();
 }

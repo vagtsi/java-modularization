@@ -15,9 +15,11 @@ public class SimpleNamedExtensionRegistry<T> implements NamedExtensionRegistry<T
   private final Class<T> type;
   protected ConcurrentHashMap<String, Provider<T>> registeredExtensions = new ConcurrentHashMap<>();
   protected ConcurrentHashMap<String, T> initializedExtensions = new ConcurrentHashMap<>();
+  protected final String systemProperty;
 
-  public SimpleNamedExtensionRegistry(Class<T> type) {
+  public SimpleNamedExtensionRegistry(Class<T> type, String systemProperty) {
     this.type = type;
+    this.systemProperty = systemProperty;
   }
 
   @Override
@@ -55,8 +57,13 @@ public class SimpleNamedExtensionRegistry<T> implements NamedExtensionRegistry<T
     return type;
   }
 
-  public static <T> SimpleNamedExtensionRegistry<T> create(Class<T> type) {
-    return new SimpleNamedExtensionRegistry<>(type);
+  @Override
+  public String systemProperty() {
+  	return systemProperty;
+  }
+
+  public static <T> SimpleNamedExtensionRegistry<T> create(Class<T> type, String systemProperty) {
+    return new SimpleNamedExtensionRegistry<>(type, systemProperty);
   }
 
   // --- private ---
@@ -71,6 +78,5 @@ public class SimpleNamedExtensionRegistry<T> implements NamedExtensionRegistry<T
           "Failed to retrieve extension with name '%s'", name));
     }
   }
-
 
 }

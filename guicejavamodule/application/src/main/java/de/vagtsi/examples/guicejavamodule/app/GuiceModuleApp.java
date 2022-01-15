@@ -44,6 +44,7 @@ public class GuiceModuleApp {
     }
 
     // check named database services
+    System.setProperty("guicejavaapp.databasetype", "postgres"); //configure database type
     Plugin dbCoreModule = pluginModules.get("plugin.database.core");
     @SuppressWarnings("unchecked")
     NamedExtensionRegistry<DatabaseService> dbRegistry = dbCoreModule.namedExtensionRegistries().get("database");
