@@ -46,3 +46,14 @@ To import the source code into the Eclipse IDE you can create the necessary `.pr
 and then `Import/Existing Projects into Workspace` with `Search for nested projects` option switched `on` within Eclipse.
 
 Please note: the generation of Eclipse files with Gradle is necessary until the [Eclipse Buildship plugin](https://projects.eclipse.org/projects/tools.buildship) supports Java modules (see [Support Jigsaw projects](https://github.com/eclipse/buildship/issues/658)).
+## Legacy application
+This example project does provide an additional non module application in the `application-legacy` folder. This shows the loading of the plugin modules from the classpath. The required jvm `--module-path` has been configured in the applications `build.gradle`:
+```
+ '--module-path', classpath.asPath,
+ '--add-modules', 'ALL-MODULE-PATH'
+ ```
+ To compile and run the application simply execute:
+ ```
+./gradlew runLegacy
+```
+ 

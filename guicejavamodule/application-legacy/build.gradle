@@ -1,6 +1,3 @@
-plugins {
-    id 'application'
-}
 dependencies {
     implementation project(':plugin-api')
     implementation project(':plugin-core')
@@ -10,11 +7,13 @@ dependencies {
 	implementation 'ch.qos.logback:logback-classic:1.2.9'
 }
 
-application {
-    mainClass = 'de.vagtsi.examples.guicejavamodule.legacyapp.GuiceLegacyApp'
-    //applicationDefaultJvmArgs = ['--add-modules', 'plugin.database.core', 'org.slf4j'] 
-}
-
-java {
-    modularity.inferModulePath = true
+// define task for running the legacy app
+task runLegacy(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'de.vagtsi.examples.guicejavamodule.legacyapp.GuiceLegacyApp'
+    // load all modules from configured classpath
+    jvmArgs = [
+      '--module-path', classpath.asPath,
+      '--add-modules', 'ALL-MODULE-PATH'
+    ]
 }

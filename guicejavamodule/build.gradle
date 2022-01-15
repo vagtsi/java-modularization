@@ -15,6 +15,13 @@ subprojects {
 	    // JSR-330 dependency injection with Guice
 	    api "com.google.inject:guice:5.0.1"
 	    
+	    modules {
+	        module("javax.inject:javax.inject") {
+	            replacedBy("jakarta.inject:jakarta.inject-api",
+	            	 "replace guice javax.inject dependency with JPMS supported version")
+	        }
+    	}
+    	
 	    // javax.inject with JPMS support
 		implementation 'jakarta.inject:jakarta.inject-api:1.0.3'
 		

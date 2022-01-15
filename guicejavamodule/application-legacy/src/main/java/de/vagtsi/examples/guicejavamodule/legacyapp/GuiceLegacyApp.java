@@ -1,14 +1,14 @@
 package de.vagtsi.examples.guicejavamodule.legacyapp;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.api.NamedExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.database.core.DatabaseService;
@@ -25,14 +25,6 @@ public class GuiceLegacyApp {
   }
 
   private void init() {
-    RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-    List<String> jvmArgs = runtimeMXBean.getInputArguments();
-    for (String arg : jvmArgs) {
-        log.info(arg);
-    }
-    // load all plugins from module path (all modules "requires" by this app module)
-    //Map<String, PluginModule> pluginModules = PluginModuleLoader.loadPluginsFromModulePath();
-
     // load all plugins (jars) dynamically from plugin directory
     Path projectDir = Paths.get(".").normalize().toAbsolutePath();
     Map<String, Plugin> pluginModules = PluginModuleLoader.loadPluginsFromDirectory(
