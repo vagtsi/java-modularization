@@ -5,9 +5,11 @@ import de.vagtsi.examples.guicejavamodule.api.SimpleNamedExtensionRegistry;
 
 public class DatabaseCoreModule extends PluginModule {
   
-  @Override
+ public static final String DATABASETYPE_PROPNAME = "guicejavaapp.databasetype";
+
+@Override
   protected void configure() {
 	//create and register named extension registry
-	bindExtensionRegistry(SimpleNamedExtensionRegistry.create(DatabaseService.class, "guicejavaapp.databasetype"));
+	bindExtensionRegistry(SimpleNamedExtensionRegistry.create(DatabaseService.class, DATABASETYPE_PROPNAME));
   }
 }

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.api.NamedExtensionRegistry;
+import de.vagtsi.examples.guicejavamodule.database.core.DatabaseCoreModule;
 import de.vagtsi.examples.guicejavamodule.database.core.DatabaseService;
 import de.vagtsi.examples.guicejavamodule.greeting.core.GreetingService;
 import de.vagtsi.examples.guicejavamodule.plugin.core.Plugin;
@@ -43,7 +44,7 @@ public class GuiceModuleApp {
     }
 
     // check named database services
-    System.setProperty("guicejavaapp.databasetype", "postgres"); //configure database type
+    System.setProperty(DatabaseCoreModule.DATABASETYPE_PROPNAME, "postgres"); //configure database type
     Plugin dbCoreModule = pluginModules.get("plugin.database.core");
     NamedExtensionRegistry<DatabaseService> dbRegistry = dbCoreModule.namedExtensionRegistry(DatabaseService.class);
     Set<String> names = dbRegistry.getAllExtensionNames();
