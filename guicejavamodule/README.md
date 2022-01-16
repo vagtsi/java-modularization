@@ -40,11 +40,11 @@ Just compile and execute the configured application with the provided gradle wra
 The application will show nice logging output to the stdout to get some insights of the module mechanism.
 
 ## Develop
-To import the source code into the [Eclipse IDE](https://www.eclipse.org/ide/) you can create the necessary `.project` and `.classpath` files with 
+To import the source code into the [Eclipse IDE](https://www.eclipse.org/eclipseide/) you can create the necessary `.project` and `.classpath` files with 
 ```
 ./gradlew eclipse
 ```
-and then `Import/Existing Projects into Workspace` with `Search for nested projects` option switched `on` within Eclipse.
+and then `Import/Existing Projects into Workspace` https://www.eclipse.org/eclipseide/https://www.eclipse.org/eclipseide/with `Search for nested projects` option switched `on` within Eclipse.
 
 Please note: the generation of Eclipse files with Gradle is necessary until the [Eclipse Buildship plugin](https://projects.eclipse.org/projects/tools.buildship) supports Java modules (see [Support Jigsaw projects](https://github.com/eclipse/buildship/issues/658)).
 
