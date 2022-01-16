@@ -39,13 +39,20 @@ Just compile and execute the configured application with the provided gradle wra
 ```
 The application will show nice logging output to the stdout to get some insights of the module mechanism.
 
-To import the source code into the Eclipse IDE you can create the necessary `.project` and `.classpath` files with 
+## Develop
+To import the source code into the [Eclipse IDE](https://www.eclipse.org/ide/) you can create the necessary `.project` and `.classpath` files with 
 ```
 ./gradlew eclipse
 ```
 and then `Import/Existing Projects into Workspace` with `Search for nested projects` option switched `on` within Eclipse.
 
 Please note: the generation of Eclipse files with Gradle is necessary until the [Eclipse Buildship plugin](https://projects.eclipse.org/projects/tools.buildship) supports Java modules (see [Support Jigsaw projects](https://github.com/eclipse/buildship/issues/658)).
+
+To import the source code into [IntelliJ IDEA](http://www.jetbrains.com/idea/) you can create the necessary project `.iml` files with:
+```
+./gradlew idea
+```
+
 ## Legacy application
 This example project does provide an additional non module application in the `application-legacy` folder. This shows the loading of the plugin modules from the classpath. The required jvm argument `--module-path` has been configured in the applications `build.gradle`:
 ```
