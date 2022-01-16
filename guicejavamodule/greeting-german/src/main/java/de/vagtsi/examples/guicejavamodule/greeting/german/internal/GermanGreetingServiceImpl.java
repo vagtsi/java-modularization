@@ -1,4 +1,4 @@
-package de.vagtsi.examples.guicejavamodule.greeting.german;
+package de.vagtsi.examples.guicejavamodule.greeting.german.internal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

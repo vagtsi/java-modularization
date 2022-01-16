@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.ProvidesIntoMap;
 import com.google.inject.multibindings.StringMapKey;
 import de.vagtsi.examples.guicejavamodule.database.core.DatabaseService;
+import de.vagtsi.examples.guicejavamodule.database.postgres.internal.PostgresDatabaseServiceImpl;
 
 public class PostgresDatabaseModule extends AbstractModule {
 

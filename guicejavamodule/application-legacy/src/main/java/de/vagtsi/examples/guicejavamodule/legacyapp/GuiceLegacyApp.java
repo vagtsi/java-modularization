@@ -53,13 +53,13 @@ public class GuiceLegacyApp {
     log.info("> succesful retrieved database service {}", databaseService.databaseName());
     
     // test access to internal (non exported) module class via reflection
-    String className = "de.vagtsi.examples.guicejavamodule.greeting.core.internal.NonExportedService";
+    String className = "de.vagtsi.examples.guicejavamodule.greeting.core.internal.ExampleCoreServiceImpl";
     try {
 		Class<?> internalClass = Class.forName(className);
 		Object internalObject = internalClass.getDeclaredConstructor().newInstance();
 		log.warn("> created instance of internal class [{}] with reflection!", internalObject.getClass().getName());
 	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-		log.info("> internal class [{}] is not accessible by reflection: {}", className, e.getMessage());
+		log.info("> internal class [{}] is correctly not accessible by reflection: {}", className, e.getMessage());
 	}
   }
 }

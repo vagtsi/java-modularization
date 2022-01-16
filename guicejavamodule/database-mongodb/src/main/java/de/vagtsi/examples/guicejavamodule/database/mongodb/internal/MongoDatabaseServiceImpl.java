@@ -1,4 +1,4 @@
-package de.vagtsi.examples.guicejavamodule.database.mongodb;
+package de.vagtsi.examples.guicejavamodule.database.mongodb.internal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

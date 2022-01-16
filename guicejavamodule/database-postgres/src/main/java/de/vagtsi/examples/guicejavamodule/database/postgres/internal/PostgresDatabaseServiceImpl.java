@@ -1,4 +1,4 @@
-package de.vagtsi.examples.guicejavamodule.database.postgres;
+package de.vagtsi.examples.guicejavamodule.database.postgres.internal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,8 @@
-package de.vagtsi.examples.guicejavamodule.greeting.english;
+package de.vagtsi.examples.guicejavamodule.greeting.english.internal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import de.vagtsi.examples.guicejavamodule.greeting.core.ExampleCoreService;
 import de.vagtsi.examples.guicejavamodule.greeting.core.GreetingService;
 

@@ -14,7 +14,7 @@ The general idea is to expose Guice module definitions as java service as explai
   ServiceLoader<Module> pluginLoader = ServiceLoader.load(com.google.inject.Module.class);
  ```
  
-Additionally this example creates one `Injector` instance for each module/plugin. In case of parent module dependencies defined by `requires` within the `module-info.java`, the `Injector` is created as child injector of that parent module in order to access any provided instances via `@Inject`. As example the `EnglishGreetingServiceImpl` within the plugin `greeting-english` gets injected the `ExampleCoreService` provided by its parent plugin `greeting-core`.
+Additionally this example creates one `Injector` instance for each module/plugin. In case of parent module dependencies defined by `requires` within the `module-info.java`, the `Injector` is created as child injector of that parent module in order to access any provided instances via `@Inject`. As an example the `EnglishGreetingServiceImpl` within the plugin `greeting-english` gets the `ExampleCoreService` injected provided by its parent plugin `greeting-core`.
 To provide extension services, the service implementations just need to be provided in their Guice module
 ```
   @ProvidesIntoSet
@@ -24,6 +24,8 @@ To provide extension services, the service implementations just need to be provi
   }
 ```
 to get automatically registered at the appropriate `ExtensionRegistry`.
+
+The actual service implementations of each plugin are hidden in their `internal` packages. Only the package containing Guice module class and any exposed interfaces need to made accessible to other modules with the `exports` definition in the module descriptor. The access to these internal classes is even not possible with reflection as tested within the application code on trying to instantiate an object of class `ExampleCoreServiceImpl` located a not exported package of the module `greeting-core`.
 
 At runtime we get following injector inheritance. The `SystemInjector` is not created in this example but would be the choice for providing any system services to be injected in real world scenarios:
 ![Injector hierarchy](doc/injector-hierarchy.png "Injector hierarchy")
