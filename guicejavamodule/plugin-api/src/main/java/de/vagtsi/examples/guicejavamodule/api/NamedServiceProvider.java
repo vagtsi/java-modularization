@@ -1,6 +1,5 @@
 package de.vagtsi.examples.guicejavamodule.api;
 
-import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ public class NamedServiceProvider<T> implements Provider<T> {
 
   private NamedExtensionRegistry<T> namedServiceRegistry; 
   
-  @Inject
   public NamedServiceProvider(NamedExtensionRegistry<T> namedServiceRegistry) {
     this.namedServiceRegistry = namedServiceRegistry;
   }
@@ -28,6 +26,10 @@ public class NamedServiceProvider<T> implements Provider<T> {
 	}
     log.info("Retrieving named service of confiured name [{}]", configuredName);
     return namedServiceRegistry.getExtensionByName(configuredName);
+  }
+
+  public static <T> NamedServiceProvider<T> create(NamedExtensionRegistry<T> namedServiceRegistry) {
+	return new NamedServiceProvider<>(namedServiceRegistry);
   }
 
 }

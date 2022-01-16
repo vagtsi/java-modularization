@@ -10,7 +10,7 @@ import de.vagtsi.examples.guicejavamodule.api.SimpleExtensionRegistry;
 public class GreetingCoreModule extends PluginModule {
 	@Override
 	protected void configure() {
-		//register extension registry
+		//create and register extension registry
 		bindExtensionRegistry(SimpleExtensionRegistry.create(GreetingService.class));
 	}
 

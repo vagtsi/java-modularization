@@ -33,8 +33,7 @@ public class GuiceLegacyApp {
 
     // call/print out all plugged in GreetingServices
     Plugin coreModule = pluginModules.get("plugin.greeting.core");
-    @SuppressWarnings("unchecked")
-    ExtensionRegistry<GreetingService> registry = coreModule.extensionRegistries().iterator().next();
+    ExtensionRegistry<GreetingService> registry = coreModule.extensionRegistry(GreetingService.class);
     List<GreetingService> services = registry.getAllExtensions();
     
     log.info("{} GreetingServices are registered:", services.size());
@@ -44,8 +43,7 @@ public class GuiceLegacyApp {
 
     // check named database services
     Plugin dbCoreModule = pluginModules.get("plugin.database.core");
-    @SuppressWarnings("unchecked")
-    NamedExtensionRegistry<DatabaseService> dbRegistry = dbCoreModule.namedExtensionRegistries().get("database");
+    NamedExtensionRegistry<DatabaseService> dbRegistry = dbCoreModule.namedExtensionRegistry(DatabaseService.class);
     Set<String> names = dbRegistry.getAllExtensionNames();
     log.info("{} DatabaseServices are registered {}", names.size(), names);
     DatabaseService databaseService = dbCoreModule.getService(DatabaseService.class);

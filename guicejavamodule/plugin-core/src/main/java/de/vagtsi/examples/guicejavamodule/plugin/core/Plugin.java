@@ -3,9 +3,12 @@ package de.vagtsi.examples.guicejavamodule.plugin.core;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+
 import javax.inject.Provider;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.google.inject.Binding;
 import com.google.inject.ConfigurationException;
 import com.google.inject.Guice;
@@ -13,6 +16,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
+
 import de.vagtsi.examples.guicejavamodule.api.ExtensionRegistry;
 import de.vagtsi.examples.guicejavamodule.api.NamedExtensionRegistry;
 
@@ -31,7 +35,7 @@ public class Plugin {
   private Set<ExtensionRegistry> registries;
 
   @SuppressWarnings("rawtypes")
-  private Map<String, NamedExtensionRegistry> namedRegistries;
+  private Set<NamedExtensionRegistry> namedRegistries;
 
   public Plugin(com.google.inject.Module module) {
     guiceModule = module;
@@ -59,14 +63,30 @@ public class Plugin {
     return moduleName();
   }
 
-  @SuppressWarnings("rawtypes")
-  public Set<ExtensionRegistry> extensionRegistries() {
-    return registries;
+  /**
+   * Retrieve the registry instance of given extension type.
+   * @param extensionType the extension type of desired registry
+   * @return the extension registry of given extension type or null if not exist in this plugin
+   */
+  @SuppressWarnings("unchecked")
+  public <T> ExtensionRegistry<T> extensionRegistry(Class<T> extensionType) {
+	 return registries.stream()
+				.filter(r -> r.getExtensionType().equals(extensionType))
+				.findFirst()
+				.orElse(null);
   }
-
-  @SuppressWarnings("rawtypes")
-  public Map<String, NamedExtensionRegistry> namedExtensionRegistries() {
-    return namedRegistries;
+  
+  /**
+   * Retrieve the named registry instance of given extension type.
+   * @param extensionType the extension type of desired registry
+   * @return the named extension registry of given extension type or null if not exist in this plugin
+   */
+  @SuppressWarnings("unchecked")
+  public <T> NamedExtensionRegistry<T> namedExtensionRegistry(Class<T> extensionType) {
+	 return namedRegistries.stream()
+				.filter(r -> r.getExtensionType().equals(extensionType))
+				.findFirst()
+				.orElse(null);
   }
 
   public void initialize() {
@@ -96,10 +116,10 @@ public class Plugin {
     }
     
     try {
-      namedRegistries = injector.getInstance(Key.get(mapOf(NamedExtensionRegistry.class)));
+      namedRegistries = injector.getInstance(Key.get(setOf(NamedExtensionRegistry.class)));
     } catch (ConfigurationException e) {
       log.debug("Plugin {} does not provide any named extension registries", moduleName());
-      namedRegistries = Collections.emptyMap();
+      namedRegistries = Collections.emptySet();
     }
 
     log.info("> finished initialization of plugin module '{}'", moduleName());
@@ -117,7 +137,17 @@ public class Plugin {
     }
     return injector;
   }
-  
+
+  @SuppressWarnings("rawtypes")
+  private Set<ExtensionRegistry> extensionRegistries() {
+    return registries;
+  }
+
+  @SuppressWarnings("rawtypes")
+  private Set<NamedExtensionRegistry> namedExtensionRegistries() {
+    return namedRegistries;
+  }
+
   @SuppressWarnings({"rawtypes", "unchecked"})
   private void registerExtensions() {
     if (parentPlugin == null) {
@@ -140,7 +170,7 @@ public class Plugin {
 
     if (!parentPlugin.namedExtensionRegistries().isEmpty()) {
       log.info("Registering named extensions to {} named registries of parent plugin {}", parentPlugin.namedExtensionRegistries().size(), parentPlugin);
-      for (NamedExtensionRegistry registry : parentPlugin.namedExtensionRegistries().values()) {
+      for (NamedExtensionRegistry registry : parentPlugin.namedExtensionRegistries()) {
         Class<?> extensionType = registry.getExtensionType();
         Map<String, ?> extensions = injector.getInstance(Key.get(mapOfProvider(extensionType)));
         if (!extensions.isEmpty()) {
@@ -174,11 +204,6 @@ public class Plugin {
   @SuppressWarnings("unchecked")
   private static <T> TypeLiteral<Set<T>> setOf(Class<T> type) {
     return (TypeLiteral<Set<T>>) TypeLiteral.get(Types.setOf(type));
-  }
-
-  @SuppressWarnings("unchecked")
-  private static <T> TypeLiteral<Map<String, T>> mapOf(Class<T> type) {
-    return (TypeLiteral<Map<String, T>>) TypeLiteral.get(Types.mapOf(String.class, type));
   }
 
   @SuppressWarnings("unchecked")
