@@ -1,5 +1,6 @@
 package de.vagtsi.examples.guicejavamodule.legacyapp;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -50,5 +51,15 @@ public class GuiceLegacyApp {
     log.info("{} DatabaseServices are registered {}", names.size(), names);
     DatabaseService databaseService = dbCoreModule.getService(DatabaseService.class);
     log.info("> succesful retrieved database service {}", databaseService.databaseName());
+    
+    // test access to internal (non exported) module class via reflection
+    String className = "de.vagtsi.examples.guicejavamodule.greeting.core.internal.NonExportedService";
+    try {
+		Class<?> internalClass = Class.forName(className);
+		Object internalObject = internalClass.getDeclaredConstructor().newInstance();
+		log.warn("> created instance of internal class [{}] with reflection!", internalObject.getClass().getName());
+	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		log.info("> internal class [{}] is not accessible by reflection: {}", className, e.getMessage());
+	}
   }
 }
