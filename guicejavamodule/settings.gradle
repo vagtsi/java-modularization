@@ -11,3 +11,6 @@ include('database-mongodb')
 include('database-postgres')
 include('application')
 include('application-legacy')
+
+// append suffix to get unique project names accross all example projects
+rootProject.children.each { it.name = it.name + '-guice' }

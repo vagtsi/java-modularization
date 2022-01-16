@@ -34,8 +34,10 @@ subprojects {
 	}
 	
 	ext {
+		// define suffix for unique project names across all exaples (e.g when used in one Eclipse workspace)
+		suffix = '-guice'
 		// the runtime plugin directory
-		pluginDir = "${project(':application').buildDir}/libs/plugins"
+		pluginDir = "${project(':application-guice').buildDir}/libs/plugins"
 	}
 	
 	// suppress compiler warnings about "requires transitive directive for an automatic module"

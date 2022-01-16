@@ -1,8 +1,8 @@
 dependencies {
-    implementation project(':plugin-api')
-    implementation project(':plugin-core')
-    implementation project(':greeting-core')
-    implementation project(':database-core')
+    implementation project(':plugin-api' + suffix)
+    implementation project(':plugin-core' + suffix)
+    implementation project(':greeting-core' + suffix)
+    implementation project(':database-core' + suffix)
 
 	implementation 'ch.qos.logback:logback-classic:1.2.9'
 }
@@ -10,7 +10,7 @@ dependencies {
 // define task for running the legacy app
 task runLegacy(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    main = 'de.vagtsi.examples.guicejavamodule.legacyapp.GuiceLegacyApp'
+    mainClass = 'de.vagtsi.examples.guicejavamodule.legacyapp.GuiceLegacyApp'
     // load all modules from configured classpath
     jvmArgs = [
       '--module-path', classpath.asPath,

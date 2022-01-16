@@ -1,6 +1,6 @@
 apply from: "$rootDir/plugin.gradle"
 
 dependencies {
-    implementation project(':plugin-api')
-    implementation project(':greeting-core')
+    implementation project(':plugin-api' + suffix)
+    implementation project(':greeting-core' + suffix)
 }

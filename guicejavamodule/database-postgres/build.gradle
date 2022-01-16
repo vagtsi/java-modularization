@@ -1,6 +1,6 @@
 apply from: "$rootDir/plugin.gradle"
 
 dependencies {
-    implementation project(':plugin-api')
-    implementation project(':database-core')
+    implementation project(':plugin-api' + suffix)
+    implementation project(':database-core' +suffix)
 }
